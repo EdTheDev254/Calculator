@@ -26,11 +26,11 @@ class MyApp(tk.Tk):
 		self.frame5.grid(row=4, column=0)
 
 		# Create the display Entry
-		self.calculator_display = tk.Text(self, width=15, height=2, bg='green',fg='black', font=('courier', 21), bd=3)
+		self.calculator_display = tk.Text(self, width=23, height=3, bg='green',fg='black', font=('verdana', 13), bd=3)
 
 		# Place the display entry onto frame1
-		self.calculator_display.grid(row=0, column=0, padx=20, pady=10)
-		
+		self.calculator_display.grid(row=0, column=0, sticky='n', padx=(20, 0), pady=10)
+
 		
 if __name__ == '__main__':
 	app = MyApp()
