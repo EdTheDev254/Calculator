@@ -17,6 +17,8 @@ class MyApp(tk.Tk):
 		# Set the window size
 		self.geometry('300x380')
 
+		self.variable_check = False # To check if there are characters so as to append updated ones
+
 		# Create frames for the button widgets
 		self.frame1 = tk.Frame(self)
 		self.frame2 = tk.Frame(self)
@@ -40,7 +42,7 @@ class MyApp(tk.Tk):
 		self.calculator_display.grid(row=0, column=0, sticky='n')
 
 		# Define the first row buttons
-		self.ACbutton = ttk.Button(self.frame2, text="AC", width=button_width, padding=button_padding)
+		self.ACbutton = ttk.Button(self.frame2, text="AC", width=button_width, padding=button_padding, command=self.clear_screen)
 		self.MODbutton = ttk.Button(self.frame2, text="%", width=button_width, padding=button_padding)
 		self.PIbutton = ttk.Button(self.frame2, text="PI", width=button_width, padding=button_padding)
 		self.DIVIDEbutton = ttk.Button(self.frame2, text="/", width=button_width, padding=button_padding)
@@ -52,9 +54,9 @@ class MyApp(tk.Tk):
 		self.DIVIDEbutton.grid(row=0, column=3, padx=4)
 
 		# Define the second row buttons
-		self.button7 = ttk.Button(self.frame3, text="7", width=button_width, padding=button_padding)
-		self.button8 = ttk.Button(self.frame3, text="8", width=button_width, padding=button_padding)
-		self.button9 = ttk.Button(self.frame3, text="9", width=button_width, padding=button_padding)
+		self.button7 = ttk.Button(self.frame3, text="7", width=button_width, padding=button_padding, command=lambda:self.button_clicks("7"))
+		self.button8 = ttk.Button(self.frame3, text="8", width=button_width, padding=button_padding, command=lambda:self.button_clicks("8"))
+		self.button9 = ttk.Button(self.frame3, text="9", width=button_width, padding=button_padding, command=lambda:self.button_clicks("9"))
 		self.ADDbutton = ttk.Button(self.frame3, text="+", width=button_width, padding=button_padding)
 
 		# Place the second row buttons
@@ -65,9 +67,9 @@ class MyApp(tk.Tk):
 
 
 		# Define the third row buttons
-		self.button4 = ttk.Button(self.frame4, text="4", width=button_width, padding=button_padding)
-		self.button5 = ttk.Button(self.frame4, text="5", width=button_width, padding=button_padding)
-		self.button6 = ttk.Button(self.frame4, text="6", width=button_width, padding=button_padding)
+		self.button4 = ttk.Button(self.frame4, text="4", width=button_width, padding=button_padding, command=lambda:self.button_clicks("4"))
+		self.button5 = ttk.Button(self.frame4, text="5", width=button_width, padding=button_padding, command=lambda:self.button_clicks("5"))
+		self.button6 = ttk.Button(self.frame4, text="6", width=button_width, padding=button_padding, command=lambda:self.button_clicks("6"))
 		self.MINUSbutton = ttk.Button(self.frame4, text="-", width=button_width, padding=button_padding)
 
 		# Place the third row buttons
@@ -77,9 +79,9 @@ class MyApp(tk.Tk):
 		self.MINUSbutton.grid(row=0, column=3, padx=4)
 
 		# Define the fourth row buttons
-		self.button1 = ttk.Button(self.frame5, text="1", width=button_width, padding=button_padding)
-		self.button2 = ttk.Button(self.frame5, text="2", width=button_width, padding=button_padding)
-		self.button3 = ttk.Button(self.frame5, text="3", width=button_width, padding=button_padding)
+		self.button1 = ttk.Button(self.frame5, text="1", width=button_width, padding=button_padding, command=lambda:self.button_clicks("1"))
+		self.button2 = ttk.Button(self.frame5, text="2", width=button_width, padding=button_padding, command=lambda:self.button_clicks("2"))
+		self.button3 = ttk.Button(self.frame5, text="3", width=button_width, padding=button_padding, command=lambda:self.button_clicks("3"))
 		self.MULTbutton = ttk.Button(self.frame5, text="*", width=button_width, padding=button_padding)
 
 		# Place the fourth row buttons
@@ -89,15 +91,43 @@ class MyApp(tk.Tk):
 		self.MULTbutton.grid(row=0, column=3, padx=4)
 
 		# Define the fifth row buttons
-		self.DOTbutton = ttk.Button(self.frame6, text=".", width=button_width, padding=button_padding)
-		self.button0 = ttk.Button(self.frame6, text="0", width=button_width, padding=button_padding)
+		self.DOTbutton = ttk.Button(self.frame6, text=".", width=button_width, padding=button_padding, command=lambda:self.button_clicks("."))
+		self.button0 = ttk.Button(self.frame6, text="0", width=button_width, padding=button_padding, command=lambda:self.button_clicks("0"))
 		self.EQUALbutton = ttk.Button(self.frame6, text="=", width=equal_button_width, padding=button_padding)
 
 		# Place the fifth row buttons
 		self.DOTbutton.grid(row=0, column=0, padx=4)
 		self.button0.grid(row=0, column=1, padx=4)
 		self.EQUALbutton.grid(row=0, column=3, columnspan=2, padx=4)
+    
+		# METHODS
+		# Make the buttons interact with the display window
 
+	def validate_entry(self,text):
+		# Check if the entered text contains more than one decimal point
+		if text.count('.') > 1:
+			return False
+		return True
+
+
+	def button_clicks(self, num):
+	# Avoid duplicated decimal places
+#######################################################################################
+		display_input = self.calculator_display.get("1.0", "end")
+
+		if num == '.' and '.' in display_input:
+			return
+#######################################################################################
+
+		if self.variable_check:
+			self.calculator_display.delete('1.0', 'end') # Clear screen
+			self.variable_check = False # Return to false so as to append
+		self.num = num
+		self.calculator_display.insert(tk.INSERT, self.num) # Append the value of the clicked button to the display
+
+
+	def clear_screen(self):
+		self.calculator_display.delete('1.0', 'end')
 
 if __name__ == '__main__':
 	app = MyApp()
