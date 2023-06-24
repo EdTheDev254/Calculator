@@ -103,7 +103,6 @@ class MyApp(tk.Tk):
     
 		# METHODS
 		# Make the buttons interact with the display window
-
 		# Remove white space and punctuations and convert to number
 	def remove_punc_return_int(self):
 		self.num1 = self.calculator_display.get('1.0', tk.END)
@@ -115,12 +114,6 @@ class MyApp(tk.Tk):
 				self.first_number = self.num1.replace(i,'')
 				self.calculator_display.delete('1.0', 'end') # Clear the display
 		return float(self.first_number) # Return a floating-point
-
-	# def validate_entry(self,text):
-	# 	# Check if the entered text contains more than one decimal point
-	# 	if text.count('.') > 1:
-	# 		return False
-	# 	return True
 
 
 	def button_clicks(self, num):
