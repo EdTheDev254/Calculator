@@ -1,5 +1,10 @@
+#
+#
+#
+
 import tkinter as tk
 import tkinter.ttk as ttk
+from string import punctuation
 
 class MyApp(tk.Tk):
 	def __init__(self):
@@ -57,7 +62,7 @@ class MyApp(tk.Tk):
 		self.button7 = ttk.Button(self.frame3, text="7", width=button_width, padding=button_padding, command=lambda:self.button_clicks("7"))
 		self.button8 = ttk.Button(self.frame3, text="8", width=button_width, padding=button_padding, command=lambda:self.button_clicks("8"))
 		self.button9 = ttk.Button(self.frame3, text="9", width=button_width, padding=button_padding, command=lambda:self.button_clicks("9"))
-		self.ADDbutton = ttk.Button(self.frame3, text="+", width=button_width, padding=button_padding)
+		self.ADDbutton = ttk.Button(self.frame3, text="+", width=button_width, padding=button_padding, command=lambda:self.calculate_method('+'))
 
 		# Place the second row buttons
 		self.button7.grid(row=0, column=0, padx=4)
@@ -70,7 +75,7 @@ class MyApp(tk.Tk):
 		self.button4 = ttk.Button(self.frame4, text="4", width=button_width, padding=button_padding, command=lambda:self.button_clicks("4"))
 		self.button5 = ttk.Button(self.frame4, text="5", width=button_width, padding=button_padding, command=lambda:self.button_clicks("5"))
 		self.button6 = ttk.Button(self.frame4, text="6", width=button_width, padding=button_padding, command=lambda:self.button_clicks("6"))
-		self.MINUSbutton = ttk.Button(self.frame4, text="-", width=button_width, padding=button_padding)
+		self.MINUSbutton = ttk.Button(self.frame4, text="-", width=button_width, padding=button_padding, command=self.calculate_output)
 
 		# Place the third row buttons
 		self.button4.grid(row=0, column=0, padx=4)
@@ -93,7 +98,7 @@ class MyApp(tk.Tk):
 		# Define the fifth row buttons
 		self.DOTbutton = ttk.Button(self.frame6, text=".", width=button_width, padding=button_padding, command=lambda:self.button_clicks("."))
 		self.button0 = ttk.Button(self.frame6, text="0", width=button_width, padding=button_padding, command=lambda:self.button_clicks("0"))
-		self.EQUALbutton = ttk.Button(self.frame6, text="=", width=equal_button_width, padding=button_padding)
+		self.EQUALbutton = ttk.Button(self.frame6, text="=", width=equal_button_width, padding=button_padding, command=self.calulate_output)
 
 		# Place the fifth row buttons
 		self.DOTbutton.grid(row=0, column=0, padx=4)
@@ -102,12 +107,17 @@ class MyApp(tk.Tk):
     
 		# METHODS
 		# Make the buttons interact with the display window
+		# Remove white space and punctuations and convert to number
+	def remove_punc_return_int(self):
+		self.num1 = self.calculator_display.get('1.0', tk.END)
 
-	def validate_entry(self,text):
-		# Check if the entered text contains more than one decimal point
-		if text.count('.') > 1:
-			return False
-		return True
+		# Prevent empty input
+		
+		for i in self.num1:
+			if i in punctuation or i == '\n':
+				self.first_number = self.num1.replace(i,'')
+				self.calculator_display.delete('1.0', 'end') # Clear the display
+		return float(self.first_number) # Return a floating-point
 
 
 	def button_clicks(self, num):
@@ -128,6 +138,29 @@ class MyApp(tk.Tk):
 
 	def clear_screen(self):
 		self.calculator_display.delete('1.0', 'end')
+
+	def calculate_method(self, char_x):
+		self.char_x = char_x
+		self.input1 = self.remove_punc_return_int() # Get the first number
+		print('First number is:', self.input1)
+
+		#print(self.first_number, 'button Clicked')
+
+	# Calculate output of the calculation
+	def calulate_output(self):
+		if self.num1 != '':
+			self.input2 = self.remove_punc_return_int()
+
+		# Addition feature
+		if self.char_x == '+':
+			print('Second Number:', self.input2)
+			self.summation = self.input1 + self.input2
+		self.calculator_display.insert(tk.INSERT, self.summation)
+		print('Total:', self.summation)
+
+		# Subtraction feature
+		if self.char_x == '-':
+			print('Subtraction selected.....')
 
 if __name__ == '__main__':
 	app = MyApp()
