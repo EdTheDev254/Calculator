@@ -94,7 +94,7 @@ class MyApp(tk.Tk):
 		# Define the fifth row buttons
 		self.DOTbutton = ttk.Button(self.frame6, text=".", width=button_width, padding=button_padding, command=lambda:self.button_clicks("."))
 		self.button0 = ttk.Button(self.frame6, text="0", width=button_width, padding=button_padding, command=lambda:self.button_clicks("0"))
-		self.EQUALbutton = ttk.Button(self.frame6, text="=", width=equal_button_width, padding=button_padding, command=self.calulate_output)
+		self.EQUALbutton = ttk.Button(self.frame6, text="=", width=equal_button_width, padding=button_padding, command=self.calculate_output)
 
 		# Place the fifth row buttons
 		self.DOTbutton.grid(row=0, column=0, padx=4)
@@ -143,7 +143,7 @@ class MyApp(tk.Tk):
 		#print(self.first_number, 'button Clicked')
 
 	# Calculate output of the calculation
-	def calulate_output(self):
+	def calculate_output(self):
 		if self.num1 != '':
 			self.input2 = self.remove_punc_return_int()
 
