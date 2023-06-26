@@ -75,7 +75,7 @@ class MyApp(tk.Tk):
 		self.button4 = ttk.Button(self.frame4, text="4", width=button_width, padding=button_padding, command=lambda:self.button_clicks("4"))
 		self.button5 = ttk.Button(self.frame4, text="5", width=button_width, padding=button_padding, command=lambda:self.button_clicks("5"))
 		self.button6 = ttk.Button(self.frame4, text="6", width=button_width, padding=button_padding, command=lambda:self.button_clicks("6"))
-		self.MINUSbutton = ttk.Button(self.frame4, text="-", width=button_width, padding=button_padding, command=self.calculate_output)
+		self.MINUSbutton = ttk.Button(self.frame4, text="-", width=button_width, padding=button_padding, command=lambda:self.calculate_method('-'))
 
 		# Place the third row buttons
 		self.button4.grid(row=0, column=0, padx=4)
@@ -98,7 +98,7 @@ class MyApp(tk.Tk):
 		# Define the fifth row buttons
 		self.DOTbutton = ttk.Button(self.frame6, text=".", width=button_width, padding=button_padding, command=lambda:self.button_clicks("."))
 		self.button0 = ttk.Button(self.frame6, text="0", width=button_width, padding=button_padding, command=lambda:self.button_clicks("0"))
-		self.EQUALbutton = ttk.Button(self.frame6, text="=", width=equal_button_width, padding=button_padding, command=self.calulate_output)
+		self.EQUALbutton = ttk.Button(self.frame6, text="=", width=equal_button_width, padding=button_padding, command=self.calculate_output)
 
 		# Place the fifth row buttons
 		self.DOTbutton.grid(row=0, column=0, padx=4)
@@ -147,7 +147,7 @@ class MyApp(tk.Tk):
 		#print(self.first_number, 'button Clicked')
 
 	# Calculate output of the calculation
-	def calulate_output(self):
+	def calculate_output(self):
 		if self.num1 != '':
 			self.input2 = self.remove_punc_return_int()
 
@@ -155,12 +155,13 @@ class MyApp(tk.Tk):
 		if self.char_x == '+':
 			print('Second Number:', self.input2)
 			self.summation = self.input1 + self.input2
-		self.calculator_display.insert(tk.INSERT, self.summation)
-		print('Total:', self.summation)
 
 		# Subtraction feature
 		if self.char_x == '-':
-			print('Subtraction selected.....')
+			print('Subtraction selected')
+
+		self.calculator_display.insert(tk.INSERT, self.summation)
+		print('Total:', self.summation)
 
 if __name__ == '__main__':
 	app = MyApp()
