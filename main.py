@@ -153,12 +153,15 @@ class MyApp(tk.Tk):
 
 		# Addition feature
 		if self.char_x == '+':
-			print('Second Number:', self.input2)
+			#print('First number selected')
 			self.summation = self.input1 + self.input2
+			#print('Second Number:', self.input2)
 
 		# Subtraction feature
 		if self.char_x == '-':
-			print('Subtraction selected')
+			#print('Subtraction selected')
+			self.summation = self.input1 - self.input2
+			#print('Second Number:', self.input2)
 
 		self.calculator_display.insert(tk.INSERT, self.summation)
 		print('Total:', self.summation)
